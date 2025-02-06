@@ -1,0 +1,8 @@
+node_modules/
+ecom-fr/node_modules/
+backend/target/
+
+# Ignore IDE-specific files
+*.iml
+.idea/
+.vscode/
