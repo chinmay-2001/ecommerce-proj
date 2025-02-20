@@ -1,14 +1,24 @@
 package com.chinmay.ecom_proj.controller;
 
+import co.elastic.clients.elasticsearch.tasks.ElasticsearchTasksClient;
 import com.chinmay.ecom_proj.model.FilterDataResponse;
 import com.chinmay.ecom_proj.model.Product;
+import com.chinmay.ecom_proj.model.searchProductModal;
 import com.chinmay.ecom_proj.service.ProductService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.elasticsearch.client.elc.ElasticsearchTemplate;
+import org.springframework.data.elasticsearch.core.ElasticsearchOperations;
+import org.springframework.data.elasticsearch.core.SearchHits;
+import org.springframework.data.elasticsearch.core.query.Criteria;
+import org.springframework.data.elasticsearch.core.query.CriteriaQuery;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
+
+
+
 
 import java.io.IOException;
 import java.util.List;
@@ -21,6 +31,8 @@ import java.util.Map;
 public class ProductController {
     @Autowired
     private ProductService service;
+
+
 
     @GetMapping("/products")
     public ResponseEntity<List<Product>> getAllProduct(@RequestParam Map<String,String> params){
@@ -98,8 +110,11 @@ public class ProductController {
     }
 
     @GetMapping("/product/search")
-    public  ResponseEntity<List<Product>>  searchProducts(@RequestParam String  keyword){
-        List<Product> products=service.searchProduct(keyword);
+    public  ResponseEntity<?>  searchProducts(@RequestParam String  keyword){
+        System.out.println(keyword);
+
+
+        List<searchProductModal> products=service.searchProduct(keyword);
         return new ResponseEntity<>(products,HttpStatus.OK);
     }
 }

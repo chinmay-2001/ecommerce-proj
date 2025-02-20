@@ -1,4 +1,4 @@
-import React, { useContext, useEffect, useState } from "react";
+import { useCallback, useContext, useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import axios from "axios";
 import AppContext from "../Context/Context";
@@ -9,6 +9,7 @@ const Home = ({ selectedCategory, selectedBrand, setFilterData }) => {
   const [products, setProducts] = useState([]);
 
   useEffect(() => {
+    console.log(1);
     const filter = prepareFilter({
       category: selectedCategory,
       brand: selectedBrand,
@@ -17,10 +18,14 @@ const Home = ({ selectedCategory, selectedBrand, setFilterData }) => {
     refreshFilterData();
   }, [refreshData, selectedCategory, selectedBrand]);
 
-  const refreshFilterData = async () => {
+  const refreshFilterData = useCallback(async () => {
     const filterData = await axios.get("http://localhost:8080/api/filters");
-    setFilterData(filterData.data);
-  };
+    setFilterData((prevData) =>
+      JSON.stringify(prevData) === JSON.stringify(filterData.data)
+        ? prevData
+        : filterData.data
+    );
+  }, []);
 
   useEffect(() => {
     if (data && data.length > 0) {

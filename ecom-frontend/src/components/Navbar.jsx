@@ -1,6 +1,6 @@
-import React, { useEffect, useState } from "react";
-import Home from "./Home";
+import { useEffect, useState } from "react";
 import axios from "axios";
+import { Link } from "react-router-dom";
 
 const Navbar = ({ onSelectCategory, onSelectBrand, filterData }) => {
   const getInitialTheme = () => {
@@ -58,14 +58,6 @@ const Navbar = ({ onSelectCategory, onSelectBrand, filterData }) => {
     document.body.className = theme;
   }, [theme]);
 
-  //   "Laptop",
-  //   "Headphone",
-  //   "Mobile",
-  //   "Electronics",
-  //   "Toys",
-  //   "Fashion",
-  // ];
-
   return (
     <>
       <header>
@@ -89,14 +81,17 @@ const Navbar = ({ onSelectCategory, onSelectBrand, filterData }) => {
             >
               <ul className="navbar-nav me-auto mb-2 mb-lg-0">
                 <li className="nav-item">
-                  <a className="nav-link active" aria-current="page" href="/">
+                  <Link className="nav-link active" aria-current="page" to="/">
                     Home
-                  </a>
+                  </Link>
                 </li>
                 <li className="nav-item">
-                  <a className="nav-link" href="/add_product">
+                  <Link className="nav-link" to="/add_product">
                     Add Product
-                  </a>
+                  </Link>
+                  {/* <a className="nav-link" href="#">
+                    Add Product
+                  </a> */}
                 </li>
 
                 <li className="nav-item dropdown">
@@ -163,14 +158,14 @@ const Navbar = ({ onSelectCategory, onSelectBrand, filterData }) => {
                 )}
               </button>
               <div className="d-flex align-items-center cart">
-                <a href="/cart" className="nav-link text-dark">
+                <Link to="/cart" className="nav-link text-dark">
                   <i
                     className="bi bi-cart me-2"
                     style={{ display: "flex", alignItems: "center" }}
                   >
                     Cart
                   </i>
-                </a>
+                </Link>
                 {/* <form className="d-flex" role="search" onSubmit={handleSearch} id="searchForm"> */}
                 <input
                   className="form-control me-2"
@@ -187,12 +182,12 @@ const Navbar = ({ onSelectCategory, onSelectBrand, filterData }) => {
                     {searchResults.length > 0
                       ? searchResults.map((result) => (
                           <li key={result.id} className="list-group-item">
-                            <a
-                              href={`/product/${result.id}`}
+                            <Link
+                              to={`/product/${result.id}`}
                               className="search-result-link"
                             >
                               <span>{result.name}</span>
-                            </a>
+                            </Link>
                           </li>
                         ))
                       : noResults && (
